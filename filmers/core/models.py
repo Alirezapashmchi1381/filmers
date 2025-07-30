@@ -43,3 +43,9 @@ class Movie(models.Model):
     director = models.ForeignKey(Director, on_delete=models.CASCADE)
     created_by = models.ForeignKey(SuperUser, on_delete=models.CASCADE)
     #add average rating
+    def average_rating(self):
+        ratings = self.comments.all().values_list('rate', flat=True)
+        if ratings :
+            return round(sum(ratings) / len(ratings), 2) 
+        else :
+            return 0.0
